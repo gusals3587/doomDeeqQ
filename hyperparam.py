@@ -1,0 +1,25 @@
+from util import *
+
+STATE_SIZE = [84, 84, 4]
+
+game, actions = create_environment()
+ACTION_SIZE = game.get_available_buttons_size()
+LEARNING_RATE = 0.0002
+
+TOTAL_EPISODES = 500
+MAX_STEPS = 100
+BATCH_SIZE = 64
+
+EPSILON_MAX = 1.0
+EXPLORE_MIN = 0.01
+DECAY_RATE = 0.001
+
+DISCOUNT = 0.95
+
+PRETRAIN_LENGTH = BATCH_SIZE
+MEMORY_SIZE = 1000000
+
+TRAINING = True 
+
+EPISODE_RENDER = False
+
