@@ -32,7 +32,7 @@ def main():
     game, actions = create_environment()
 
     if TRAINING:
-        init_op = tf.initialize_all_variables() 
+        init_op = tf.global_variables_initializer() 
         with tf.Session() as sess:
             sess.run(tf.global_variables_initializer())
 
@@ -108,17 +108,21 @@ def main():
                             target_Qs_batch.append(target)
                     
                     # REMOVE AFTER DEBUGGING
-                    import pdb; pdb.set_trace()    
+                    #import pdb; pdb.set_trace()    
+
+                    target_Qs_batch = np.array(target_Qs_batch)
 
                     loss, _ = sess.run(
                             [DQNetwork.loss, DQNetwork.optimizer],
                             feed_dict={
                                 DQNetwork.inputs_: states_batch,
                                 DQNetwork.target_Q: target_Qs_batch,
-                                DQNetwork.actions_: actions_batch}
+                                DQNetwork.actions_: actions_batch
+                                }
                             )
                     
-                    summary = sess.run(write_op,
+                    # I'll check this later TODO
+                    """summary = sess.run(write_op,
                         feed_dict={
                             DQNetwork.inputs_: states_batch,
                             DQNetwork.target_Q: target_Qs_batch,
@@ -126,7 +130,7 @@ def main():
                         })
 
                     writer.add_summary(summary, episode)
-                    writer.flush()
+                    writer.flush()"""
 
                 if episode % 5 == 0:
                     save_path = saver.save(sess, "./models/model.ckpt")

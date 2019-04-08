@@ -47,8 +47,7 @@ def test_environment():
 # here, we crop the image, 'normalize' the image than resize it
 # to be smaller
 def preprocess_frame(frame):
-    cropped_frame = frame[30:-10, 30:-30]
-    print(cropped_frame)
+    cropped_frame = frame[10:-10, 30:-30]
 
     normalized_frame = cropped_frame/255.0
 

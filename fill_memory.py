@@ -8,6 +8,7 @@ def fill_memory(memory):
 
     state = game.get_state().screen_buffer
     state, stacked_frames = stack_frame(stacked_frames, state, True)
+    # import pdb; pdb.set_trace()
     for i in range(PRETRAIN_LENGTH):
         action = random.choice(actions)
 
@@ -20,6 +21,7 @@ def fill_memory(memory):
             # next state is just nothing since we're finished
             next_state = np.zeros(state.shape)
 
+            print(actions)
             memory.add((state, action, reward, next_state, done))
             
             game.new_episode()
@@ -28,7 +30,7 @@ def fill_memory(memory):
         # edge case of an end of an episode, but frankly, I don't care
         next_state = game.get_state().screen_buffer
         next_state, stacked_frames = stack_frame(stacked_frames, next_state, False)
-        memory.add((state, actions, reward, next_state, done))
+        memory.add((state, action, reward, next_state, done))
 
         state = next_state
 
