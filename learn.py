@@ -30,6 +30,10 @@ def main():
     stacked_frames = deque([np.zeros((84,84), dtype=np.int) for i in range(STACK_SIZE)], maxlen=4)
     saver = tf.train.Saver()
     game, actions = create_environment()
+    
+    writer = tf.summary.FileWriter("tensorboard/dqn/1")
+    tf.summary.scalar("Loss", DQNetwork.loss)
+    write_op = tf.summary.merge_all()
 
     if TRAINING:
         init_op = tf.global_variables_initializer() 
@@ -122,15 +126,15 @@ def main():
                             )
                     
                     # I'll check this later TODO
-                    """summary = sess.run(write_op,
+                    summary = sess.run(write_op,
                         feed_dict={
                             DQNetwork.inputs_: states_batch,
                             DQNetwork.target_Q: target_Qs_batch,
-                            DQNetwork.actions__: actions_batch
+                            DQNetwork.actions_: actions_batch
                         })
 
                     writer.add_summary(summary, episode)
-                    writer.flush()"""
+                    writer.flush()
 
                 if episode % 5 == 0:
                     save_path = saver.save(sess, "./models/model.ckpt")

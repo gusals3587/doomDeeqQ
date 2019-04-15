@@ -33,4 +33,5 @@ def fill_memory(memory):
         memory.add((state, action, reward, next_state, done))
 
         state = next_state
+    game.close()
 
